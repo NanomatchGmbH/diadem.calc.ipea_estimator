@@ -190,8 +190,8 @@ def find_executable_path(executable_name):
 
 class Executable(Enum):
     XTB = 'xtb'
-    QPPARAMETRIZER_S0_opt =        'QPParametrizer_S0_opt'
-    QPPARAMETRIZER_S1_opt =        'QPParametrizer_S1_opt'
+    QPPARAMETRIZER_geoopt =        'QPParametrizer_S0_opt'
+    QPPARAMETRIZER_ =        'QPParametrizer_S1_opt'
     QPPARAMETRIZER_S0_opt_to_S1 =  'QPParametrizer_S0_opt_to_S1'
     QPPARAMETRIZER_S0_to_S1_opt =  'QPParametrizer_S0_to_S1_opt'
     QP_ANALYZE_STOKES_SHIFT =      'QPAnalyzeStokesShift'

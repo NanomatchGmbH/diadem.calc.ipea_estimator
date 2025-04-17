@@ -1,0 +1,53 @@
+calculatorId: ip_estimator
+files:
+- molecule_opt.mol2
+image: diadem.azurecr.io/ipea_estimator:0.0.1
+onDemandEnabled: true
+operationFiles:
+  debugFiles:
+  - QPParametrizer_geoopt_debugFiles.zip
+  errorStageOut:
+  - QPParametrizer_geoopt_errorStageOut.zip
+  optionalFiles:
+  - QPParametrizer_geoopt_optionalFiles.zip
+poolId: Standard_HB120rs_v3
+price: 50
+provides:
+- IP
+- EA
+specification:
+  QPParametrizer_geoopt:
+    DFT Engine:
+      Engine: PySCF
+      Memory (MB): 336000
+      PySCF Settings:
+        Basis: def2-SVP
+        Functional: B3LYP
+      Threads: 120
+  QPParametrizer_IP_vacuum:
+    DFT Engine:
+      Engine: PySCF
+      Memory (MB): 336000
+      PySCF Settings:
+        Basis: def2-SVPD
+        Functional: BP86
+      Threads: 120
+  QPParametrizer_IP_COSMO:
+    DFT Engine:
+      Engine: PySCF
+      Memory (MB): 336000
+      PySCF Settings:
+        Basis: def2-SVPD
+        Functional: BP86
+      Threads: 120
+  QPParametrizer_GW:
+    DFT Engine:
+      Engine: PySCF
+      Memory (MB): 336000
+      PySCF Settings:
+        Basis: aug-cc-pVDZ
+        Functional: PBE0
+      Threads: 120
+  global:
+    ncpus: 120
+version: 0.0.1
