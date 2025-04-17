@@ -568,7 +568,7 @@ stop_workflow_after_module(stop_module, resultdict, executable, logger)
 previous_executable = executable  #
 
 # 3 #########################################
-executable = executable.QPPARAMETRIZER_S1_opt
+executable = executable.QPPARAMETRIZER_IP_vacuum
 #############################################
 
 
@@ -586,7 +586,8 @@ try:
 
         run_command(command, stderr_file='stderr', stdout_file='stdout')
 
-        shutil.copy('output_molecule.mol2', 'molecule_S1_opt.mol2')
+        shutil.copy('mol_data.yml', 'IP_vacuum.yml')
+
         distribute_files(executable, wf_config, diadem_dir_abs_path, debug=debug)
 
         # result
