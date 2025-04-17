@@ -25,6 +25,9 @@ DFT Engine:
     on_the_fly_jk: true
     float_gw: true
     gw_df_type: lpq
+    GW:
+      doGW: true
+      mode: g0w0
   Turbomole Settings:
     Basis: def2-SVP
     D3(BJ) Dispersion Correction: false
