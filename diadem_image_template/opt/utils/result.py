@@ -207,8 +207,8 @@ class get_result_from:
         P_minus = ea_cosmo["deltaSCF"] - ea_vac["deltaSCF"]
 
         # Correct GW values
-        IP_corr = gw["homo energy"] + P_plus
-        EA_corr = gw["lumo energy"] - P_minus
+        IP_corr = -gw["homo energy"] + P_plus
+        EA_corr = -gw["lumo energy"] - P_minus
 
         # Update values in the given structure
         local_result["IP"]["value"] = IP_corr
