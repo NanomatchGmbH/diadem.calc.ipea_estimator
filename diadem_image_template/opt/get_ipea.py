@@ -528,7 +528,7 @@ stop_workflow_after_module(stop_module, resultdict, executable, logger)
 previous_executable = executable  #
 
 # 2 #########################################
-executable = executable.QPPARAMETRIZER_S0_opt
+executable = executable.QPPARAMETRIZER_geoopt
 #############################################
 
 
@@ -547,7 +547,7 @@ try:
 
         run_command(command, stdout_file="stdout", stderr_file="stderr")
 
-        shutil.copy('output_molecule.mol2', 'molecule_S0_opt.mol2')
+        shutil.copy('output_molecule.mol2', 'molecule_opt.mol2')
         distribute_files(executable, wf_config, diadem_dir_abs_path, debug=debug)
 
         # result
