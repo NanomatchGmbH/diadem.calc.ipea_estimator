@@ -40,6 +40,22 @@ specification:
         Basis: def2-SVPD
         Functional: BP86
       Threads: 120
+  QPParametrizer_EA_vacuum:
+    DFT Engine:
+      Engine: PySCF
+      Memory (MB): 336000
+      PySCF Settings:
+        Basis: def2-SVPD
+        Functional: BP86
+      Threads: 120
+  QPParametrizer_EA_COSMO:
+    DFT Engine:
+      Engine: PySCF
+      Memory (MB): 336000
+      PySCF Settings:
+        Basis: def2-SVPD
+        Functional: BP86
+      Threads: 120
   QPParametrizer_GW:
     DFT Engine:
       Engine: PySCF
