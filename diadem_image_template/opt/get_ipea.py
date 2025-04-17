@@ -190,13 +190,13 @@ def find_executable_path(executable_name):
 
 class Executable(Enum):
     XTB = 'xtb'
-    QPPARAMETRIZER_geoopt =        'QPParametrizer_geoopt'
-    QPPARAMETRIZER_IP_vacuum =        'QPParametrizer_IP_vacuum'
+    QPPARAMETRIZER_geoopt =    'QPParametrizer_geoopt'
+    QPPARAMETRIZER_IP_vacuum = 'QPParametrizer_IP_vacuum'
     QPPARAMETRIZER_IP_COSMO =  'QPParametrizer_IP_COSMO'
-    QPPARAMETRIZER_EA_vacuum =        'QPParametrizer_EA_vacuum'
+    QPPARAMETRIZER_EA_vacuum = 'QPParametrizer_EA_vacuum'
     QPPARAMETRIZER_EA_COSMO =  'QPParametrizer_EA_COSMO'
-    QPPARAMETRIZER_GW =  'QPParametrizer_GW'
-    ANALYZE_IPEA =  'Analyze_IPEA'  # dummy
+    QPPARAMETRIZER_GW =        'QPParametrizer_GW'
+    ANALYZE_IPEA =             'Analyze_IPEA'  # dummy
 
 # Define the WorkflowConfig dataclass with an extended constructor
 @dataclass
