@@ -180,3 +180,39 @@ class get_result_from:
             local_result[stokes_shift_name]['results']['E(S1,S0_opt) in nm'] = stokes_shift_results['Excitation energy S0-S1 (S0 opt geometry) in nm:']
             local_result[stokes_shift_name]['results']['E(S1,S1_opt) in eV'] = stokes_shift_results['Excitation energy S0-S1 (S1 opt geometry) in eV:']
             local_result[stokes_shift_name]['results']['E(S1,S1_opt) in nm'] = stokes_shift_results['Excitation energy S0-S1 (S1 opt geometry) in nm:']
+
+    @staticmethod
+    def Analyze_IPEA(
+            local_result,
+            IP_vacuum_file="IP_vacuum.yml",
+            IP_COSMO_file="IP_COSMO.yml",
+            EA_vacuum_file="EA_vacuum.yml",
+            EA_COSMO_file="EA_COSMO.yml",
+            GW_file="GW.yml"
+    ):
+
+
+        def load(name):
+            with open(name, 'r') as f:
+                return yaml.safe_load(f)
+
+        ip_vac = load(IP_vacuum_file)
+        ip_cosmo = load(IP_COSMO_file)
+        ea_vac = load(EA_vacuum_file)
+        ea_cosmo = load(EA_COSMO_file)
+        gw = load(GW_file)
+
+        # Compute polarization energies
+        P_plus = ip_vac["deltaSCF"] - ip_cosmo["deltaSCF"]
+        P_minus = ea_cosmo["deltaSCF"] - ea_vac["deltaSCF"]
+
+        # Correct GW values
+        IP_corr = gw["homo energy"] + P_plus
+        EA_corr = gw["lumo energy"] - P_minus
+
+        # Update values in the given structure
+        local_result["IP"]["value"] = IP_corr
+        local_result["IP"]["results"]["IP in eV"] = IP_corr
+
+        local_result["EA"]["value"] = EA_corr
+        local_result["EA"]["results"]["EA in eV"] = EA_corr

@@ -193,7 +193,10 @@ class Executable(Enum):
     QPPARAMETRIZER_geoopt =        'QPParametrizer_geoopt'
     QPPARAMETRIZER_IP_vacuum =        'QPParametrizer_IP_vacuum'
     QPPARAMETRIZER_IP_COSMO =  'QPParametrizer_IP_COSMO'
+    QPPARAMETRIZER_EA_vacuum =        'QPParametrizer_EA_vacuum'
+    QPPARAMETRIZER_EA_COSMO =  'QPParametrizer_EA_COSMO'
     QPPARAMETRIZER_GW =  'QPParametrizer_GW'
+    ANALYZE_IPEA =  'Analyze_IPEA'  # dummy
 
 # Define the WorkflowConfig dataclass with an extended constructor
 @dataclass
@@ -567,7 +570,7 @@ stop_workflow_after_module(stop_module, resultdict, executable, logger)
 # 2 -> 3
 previous_executable = executable  #
 
-# 3 #########################################
+# 3.1 #########################################
 executable = executable.QPPARAMETRIZER_IP_vacuum
 #############################################
 
@@ -605,10 +608,48 @@ except Exception as e:
 stop_workflow_after_module(stop_module, resultdict, executable, logger)
 
 
+# 3.2 #########################################
+executable = executable.QPPARAMETRIZER_EA_vacuum
+#############################################
+
+
+try:
+    with ChangeDirectory(executable.value):
+
+        fetch_output_from_previous_executable(previous_executable.value)
+
+        executable_path = find_executable_path(executable.value.split('_')[0])  # QPParametrizer_* -> QPParametrizer
+        command = f"{executable_path}"
+
+        source_path = f'{opt_tmpl}/{executable.value}/parametrizer_settings.yml'
+        destination_path = pathlib.Path.cwd() / 'parametrizer_settings.yml'  # Current directory
+        copy_with_changes(source_path, changes[executable.value], destination_path)
+
+        run_command(command, stderr_file='stderr', stdout_file='stdout')
+
+        shutil.copy('mol_data.yml', 'EA_vacuum.yml')
+
+        distribute_files(executable, wf_config, diadem_dir_abs_path, debug=debug)
+
+        # result
+        local_resultdict = wf_config.result.get(executable)
+        get_result_from.QPParametrizer(local_resultdict, 'mol_data.yml')
+        resultdict[inchiKey].update(local_resultdict)
+        with open("result.yml", 'wt') as outfile:
+            yaml.dump(local_resultdict,
+                      outfile)  # we save the result locally in QPP folder in case the script will crash on a later stage.
+except Exception as e:
+    logger.error(f"An error occurred during {executable.value} processing: {e}")
+    distribute_files(executable, wf_config, diadem_dir_abs_path, error_happened=True, debug=debug)
+    sys.exit(1)
+
+stop_workflow_after_module(stop_module, resultdict, executable, logger)
+
+
 # 2 -> 4
 previous_executable = executable.QPPARAMETRIZER_geoopt  # S0 optimized geometry!
 
-# 4 ###############################################
+# 4.1 ###############################################
 executable = executable.QPPARAMETRIZER_IP_COSMO
 ###################################################
 
@@ -644,6 +685,46 @@ except Exception as e:
     sys.exit(1)
 
 stop_workflow_after_module(stop_module, resultdict, executable, logger)
+
+
+# 4.2 ###############################################
+executable = executable.QPPARAMETRIZER_EA_COSMO
+###################################################
+
+
+try:
+    with ChangeDirectory(executable.value):
+
+        fetch_output_from_previous_executable(previous_executable.value)
+
+        executable_path = find_executable_path(executable.value.split('_')[0])  # QPParametrizer_* -> QPParametrizer
+        command = f"{executable_path}"
+
+        source_path = f'{opt_tmpl}/{executable.value}/parametrizer_settings.yml'
+        destination_path = pathlib.Path.cwd() / 'parametrizer_settings.yml'  # Current directory
+        copy_with_changes(source_path, changes[executable.value], destination_path)
+
+        run_command(command, stderr_file="stderr", stdout_file="stdout")
+
+        shutil.copy('mol_data.yml', 'EA_COSMO.yml')
+
+        distribute_files(executable, wf_config, diadem_dir_abs_path, debug=debug)
+
+        # result
+        local_resultdict = wf_config.result.get(executable)
+        get_result_from.QPParametrizer(local_resultdict, 'mol_data.yml')
+        resultdict[inchiKey].update(local_resultdict)
+        with open("result.yml", 'wt') as outfile:
+            yaml.dump(local_resultdict,
+                      outfile)  # we save the result locally in QPP folder in case the script will crash on a later stage.
+except Exception as e:
+    logger.error(f"An error occurred during {executable.value} processing: {e}")
+    distribute_files(executable, wf_config, diadem_dir_abs_path, error_happened=True, debug=debug)
+    sys.exit(1)
+
+stop_workflow_after_module(stop_module, resultdict, executable, logger)
+
+
 
 
 # 3 -> 5
@@ -688,30 +769,38 @@ except Exception as e:
 
 # 4 -> 6
 # 5 -> 6
-previous_executable_4 = executable.QPPARAMETRIZER_S0_opt_to_S1  # absorption
-previous_executable_5 = executable.QPPARAMETRIZER_S0_to_S1_opt  # emission
+
+previous_executables = [
+    executable.QPPARAMETRIZER_IP_vacuum,
+    executable.QPPARAMETRIZER_IP_COSMO,
+    executable.QPPARAMETRIZER_EA_vacuum,
+    executable.QPPARAMETRIZER_EA_COSMO,
+    executable.QPPARAMETRIZER_GW
+]
 
 # 5 ###############################################
-executable = executable.QP_ANALYZE_STOKES_SHIFT
+executable = executable.ANALYZE_IPEA
 ###################################################
 
 
 try:
     with ChangeDirectory(executable.value):
 
-        fetch_output_from_previous_executable(previous_executable_4.value)  # s0.yml
-        fetch_output_from_previous_executable(previous_executable_5.value)  # s1.yml
+        for prev_exe in previous_executables:
+            fetch_output_from_previous_executable(prev_exe.value)  # s0.yml
 
         executable_path = find_executable_path(executable.value)
-        command = f"{executable_path} s0.yml s1.yml"
+        # command = f"{executable_path}"
 
-        run_command(command)
+        # run_command(command)
+
+
 
         distribute_files(executable, wf_config, diadem_dir_abs_path, debug=debug)
 
         # result
         local_resultdict = wf_config.result.get(executable)
-        get_result_from.QPAnalyzeStokesShift(local_resultdict, 'results.yml')
+        get_result_from.Analyze_IPEA(local_resultdict)
         resultdict[inchiKey].update(local_resultdict)
         with open("result.yml", 'wt') as outfile:
             yaml.dump(local_resultdict, outfile)
