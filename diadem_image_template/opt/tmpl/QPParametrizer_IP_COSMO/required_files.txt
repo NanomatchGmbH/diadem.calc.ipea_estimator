@@ -1,1 +1,1 @@
-s1.yml
+IP_COSMO.yml

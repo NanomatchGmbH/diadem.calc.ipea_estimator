@@ -606,10 +606,10 @@ stop_workflow_after_module(stop_module, resultdict, executable, logger)
 
 
 # 2 -> 4
-previous_executable = executable.QPPARAMETRIZER_S0_opt  # S0 optimized geometry!
+previous_executable = executable.QPPARAMETRIZER_geoopt  # S0 optimized geometry!
 
 # 4 ###############################################
-executable = executable.QPPARAMETRIZER_S0_opt_to_S1
+executable = executable.QPPARAMETRIZER_IP_COSMO
 ###################################################
 
 
@@ -627,7 +627,7 @@ try:
 
         run_command(command, stderr_file="stderr", stdout_file="stdout")
 
-        shutil.copy('mol_data.yml', 's0.yml')
+        shutil.copy('mol_data.yml', 'IP_COSMO.yml')
 
         distribute_files(executable, wf_config, diadem_dir_abs_path, debug=debug)
 

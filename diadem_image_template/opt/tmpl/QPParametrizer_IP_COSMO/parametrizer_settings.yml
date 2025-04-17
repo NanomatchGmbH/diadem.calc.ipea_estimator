@@ -14,17 +14,15 @@ DFT Engine:
     Preoptimization: None
     SCF Convergence: normal
   PySCF Settings:
-    Basis: def2-SVP
-    Functional: M06-2X
+    Basis: def2-SVPD
+    Functional: PBE0
+    D3(BJ) Dispersion Correction: false
     Partial Charge Method: No Charges
-    gridsize: 1
+    gridsize: fast
     Preoptimization: DFTB
-    td_opts_override: {conv_tol: 1.0E-4, level_shift: 0.05, deg_eia_thresh: 1.0E-2, max_cycle: 300}
-    td_grad_override: {cphf_conv_tol: 1.0E-4, cphf_max_cycle: 300}
-    geomeTRIC_override: {coordsys: tric, maxiter: 100, trust: 0.33333}
-    Geometry Convergence: TURBOMOLE
-    tda: False
-    mf: {level_shift: 0.05, conv_tol: 1.0E-8}
+    Geometry Convergence: pyscf
+    mf: {level_shift: 0.5, conv_tol: 1.0E-7}
+    cosmo: True
   Turbomole Settings:
     Basis: def2-SVP
     D3(BJ) Dispersion Correction: false
@@ -47,10 +45,11 @@ DFT Engine:
     target_value: 0.0
 Molecule Settings:
   Calculate UV/VIS spectrum: false
-  Charge: 0
-  Excited State of Interest: 1
-  Molecule (Mol2): molecule_S1_opt.mol2
+  Charge: 1
+  Excited State of Interest: 0
+  Molecule (Mol2): molecule_opt.mol2
   Molecule Identifier: F6L
-  Multiplicity: '1'
+  Multiplicity: '2'
   Optimize Molecule: false
   Parameter File: default
+  deltaSCF: True
