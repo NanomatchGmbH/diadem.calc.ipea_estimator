@@ -14,8 +14,8 @@ DFT Engine:
     Preoptimization: None
     SCF Convergence: normal
   PySCF Settings:
-    Basis: aug-cc-pVTZ
-    cbs_basis: ["aug-cc-pVDZ", "aug-cc-pVTZ"]
+    Basis: aug-cc-pVDZ
+    cbs_extra_basis: [aug-cc-pVTZ"]
     D3(BJ) Dispersion Correction: false
     Functional: PBE0
     Partial Charge Method: Mulliken
