@@ -789,7 +789,7 @@ try:
         for prev_exe in previous_executables:
             fetch_output_from_previous_executable(prev_exe.value)  # s0.yml
 
-        executable_path = find_executable_path(executable.value)
+        # executable_path = find_executable_path(executable.value)
         # command = f"{executable_path}"
 
         # run_command(command)
