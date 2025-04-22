@@ -1,0 +1,18 @@
+{
+  "0": {
+    "name": "IP",
+    "equivalentNames": ["Ionization Potential", "Ionization Energy"],
+    "calcRef": [],
+    "isSearchable": true,
+    "valueType": "num",
+    "unit": "eV"
+  },
+  "1": {
+    "name": "EA",
+    "equivalentNames": ["Electron Affinity"],
+    "calcRef": [],
+    "isSearchable": true,
+    "valueType": "num",
+    "unit": "eV"
+  }
+}
