@@ -1,7 +1,7 @@
 calculatorId: ip_estimator
 files:
 - molecule_opt.mol2
-image: diadem.azurecr.io/ipea_estimator:0.0.1
+image: diadem.azurecr.io/ipea_estimator:0.0.2
 onDemandEnabled: true
 operationFiles:
   debugFiles:
@@ -66,4 +66,4 @@ specification:
       Threads: 120
   global:
     ncpus: 120
-version: 0.0.1
+version: 0.0.2
