@@ -219,8 +219,8 @@ class get_result_from:
 
         # Update values used to compute IP an d EA.
 
-        local_result["IP"]["results"]["HOMO_vacuum in eV"] = IP_corr
-        local_result["EA"]["results"]["LUMO_vacuum in eV"] = IP_corr
+        local_result["IP"]["results"]["HOMO_vacuum in eV"] = gw["homo energy"]
+        local_result["EA"]["results"]["LUMO_vacuum in eV"] = gw["lumo energy"]
 
-        local_result["IP"]["results"]["P_plus in eV"] = IP_corr
-        local_result["EA"]["results"]["P_minus in eV"] = IP_corr
+        local_result["IP"]["results"]["P_plus in eV"] = P_plus
+        local_result["EA"]["results"]["P_minus in eV"] = P_minus
