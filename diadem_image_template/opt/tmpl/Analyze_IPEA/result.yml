@@ -1,8 +1,12 @@
 IP:
   value: null
   results:
+    'HOMO_vacuum in eV': null
+    'P_plus in eV': null
     'IP in eV': null
 EA:
   value: null
   results:
+    'LUMO_vacuum in eV': null
+    'P_minus in eV': null
     'EA in eV': null

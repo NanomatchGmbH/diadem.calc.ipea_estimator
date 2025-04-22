@@ -216,3 +216,11 @@ class get_result_from:
 
         local_result["EA"]["value"] = EA_corr
         local_result["EA"]["results"]["EA in eV"] = EA_corr
+
+        # Update values used to compute IP an d EA.
+
+        local_result["IP"]["results"]["HOMO_vacuum in eV"] = IP_corr
+        local_result["EA"]["results"]["LUMO_vacuum in eV"] = IP_corr
+
+        local_result["IP"]["results"]["P_plus in eV"] = IP_corr
+        local_result["EA"]["results"]["P_minus in eV"] = IP_corr
